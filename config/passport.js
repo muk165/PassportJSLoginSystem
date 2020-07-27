@@ -4,13 +4,13 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 
 
-function passAuth(passport) {
+module.exports = function(passport) {
 
     passport.use(
         new LocalStrategy( {usernameField: 'email'},function(email,password,callbackDone){
             
             //match user
-            User.findOne({email: email }, function(err, mongosresult){ console.log('callback' + " " + err); console.log(mongosresult); return; })
+            User.findOne({email: email }, function(err, mongosresult){ console.log('callback' + " " + err); console.log("mongo search result" + " " + mongosresult); return; })
                 .then(user => {
                     if (!user) {
                       return callbackDone(null, false, { message: 'That email is not registered' });
@@ -42,3 +42,4 @@ function passAuth(passport) {
         });
       });
 }
+
